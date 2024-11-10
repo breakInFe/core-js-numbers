@@ -202,8 +202,11 @@ function roundToPowerOfTen(num, pow) {
  */
 function isPrime(n) {
   if (n <= 1) return false;
-  for (let i = 2, sqrt = Math.sqrt(n); i <= sqrt; i + 1) {
-    if (n % i === 0) return false;
+  if (n <= 3) return true;
+  if (n % 2 === 0 || n % 3 === 0) return false;
+
+  for (let i = 5; i * i <= n; i += 6) {
+    if (n % i === 0 || n % (i + 2) === 0) return false;
   }
   return true;
 }
@@ -257,13 +260,10 @@ function getCube(num) {
  *   10 => 55
  */
 function getFibonacciNumber(index) {
-  if (index <= 1) return index;
-  let a = 0;
-  let b = 1;
-  for (let i = 2; i <= index; i + 1) {
-    [a, b] = [b, a + b];
-  }
-  return b;
+  if (index === 0) return 0;
+  if (index === 1) return 1;
+
+  return index;
 }
 
 /**
@@ -560,7 +560,8 @@ function getIntegerPartNumber(number) {
  * 0.1, 0.2, 0.3 => 0.6
  */
 function getSumOfNumbers(x1, x2, x3) {
-  return x1 + x2 + x3;
+  const sum = x1 + x2 + x3;
+  return Math.round(sum * 1e10) / 1e10;
 }
 
 /**
@@ -623,7 +624,7 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  return Math.floor((number + 1) / 2);
+  return Math.floor(Math.abs(number) / 2) + (number % 2 === 0 ? 0 : 1);
 }
 
 module.exports = {
